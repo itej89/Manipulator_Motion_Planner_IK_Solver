@@ -1,9 +1,7 @@
 #pragma once
-#include <iostream>
-#include <vector>
 
 /**
- * @file DHParameters.hpp
+ * @file DHParameters.cpp
  *
  * @brief Represents Denavit-Hartenberg parameters for a robotic link.
  *
@@ -13,6 +11,12 @@
  *
  * @author Krishna Rajesh Hundekari
  */
+
+
+#include <iostream>
+#include <vector>
+
+
 
 class DHParameters {
 private:

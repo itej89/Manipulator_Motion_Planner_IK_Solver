@@ -1,3 +1,14 @@
+/**
+ * @file robot.cpp
+ *
+ * @brief Represents a robot with Denavit-Hartenberg parameters.
+ *
+ * This class extends the DHParameters class to create a robot with additional
+ * properties and methods.
+ *
+ * @author Krishna Rajesh Hundekari
+ */
+
 #include "robot.hpp"
 
 //  This function computes the inverse kinematics for the robot based on the

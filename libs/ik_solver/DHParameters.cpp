@@ -1,4 +1,18 @@
+/**
+ * @file DHParameters.hpp
+ *
+ * @brief Represents Denavit-Hartenberg parameters for a robotic link.
+ *
+ * The Denavit-Hartenberg parameters are used to describe the geometry and joint
+ * configurations of robotic manipulators. This class provides a convenient way
+ * to store and access these parameters.
+ *
+ * @author Krishna Rajesh Hundekari
+ */
+
+
 #include "DHParameters.hpp"
+
 
 // Define the member function to get the length of the link
 double DHParameters::getLinkLength() const {
