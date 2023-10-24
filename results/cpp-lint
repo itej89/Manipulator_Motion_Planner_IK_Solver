@@ -1,0 +1,5 @@
+(base) tej@tejpc:~/Documents/Maryland/Semester4/808x/HW/OCt31/Manipulator_Motion_Planner_IK_Solver$ cpplint --filter="-legal/copyright" $( find . -name *.cpp | grep -vE -e "^./build/"  | grep -vE -e "^./thirdparty_libraries/matplotlib-cpp/"  )
+Done processing ./libs/ik_solver/src/DHParameters.cpp
+Done processing ./libs/ik_solver/src/robot.cpp
+Done processing ./test/test.cpp
+

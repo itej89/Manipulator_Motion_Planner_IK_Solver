@@ -10,8 +10,6 @@ target_include_directories(ik_solver PUBLIC
   )
 
 target_sources(ik_solver PUBLIC
-${CMAKE_CURRENT_SOURCE_DIR}/src/robot.cpp
-${CMAKE_CURRENT_SOURCE_DIR}/src/DHParameters.cpp
-
-
-)
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/robot.cpp
+  ${CMAKE_CURRENT_SOURCE_DIR}/src/DHParameters.cpp
+  )

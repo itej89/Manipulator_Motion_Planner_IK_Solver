@@ -1,31 +1,33 @@
 /**
  * @file my_robot_test.cpp
  *
- * @brief This file contains unit tests for the inverse kinematics (IK) trajectory calculation
- *        of a robot using Google Test and Google Mock.
+ * @brief This file contains unit tests for the inverse kinematics (IK)
+ * trajectory calculation of a robot using Google Test and Google Mock.
  *
- * These tests verify that the `robot` class can correctly compute the inverse kinematics
- * trajectory for a given input vector.
+ * These tests verify that the `robot` class can correctly compute the inverse
+ * kinematics trajectory for a given input vector.
  *
  * @author [Abrarudiin Syed]
  */
 
 #include <gtest/gtest.h>
-#include "gmock/gmock.h"
+
 #include <vector>
-#include "robot.hpp"
+
 #include "DHParameters.hpp"
+#include "gmock/gmock.h"
+#include "robot.hpp"
 
 /**
  * @brief Test case for the IK trajectory calculation.
  *
- * This test verifies that the `robot` class can accurately compute the inverse kinematics
- * trajectory for a given input vector.
+ * This test verifies that the `robot` class can accurately compute the inverse
+ * kinematics trajectory for a given input vector.
  */
 TEST(IK_TRAJECTORY_TEST, this_should_pass) {
   // Define an input vector representing a position in 3D space.
   std::vector<double> input_vector = {1.0, 3.0, 2.5};
-  
+
   // Create an instance of the robot for testing.
   robot trial_1;
 
@@ -33,7 +35,7 @@ TEST(IK_TRAJECTORY_TEST, this_should_pass) {
   std::vector<double> output_vector = trial_1.computeIK(input_vector);
 
   // Verify that the output vector matches the expected values.
-  ASSERT_THAT(output_vector,  ElementsAre(5, 10, 15));
+  ASSERT_THAT(output_vector, testing::ElementsAre(5, 10, 15));
 }
 
 /**
