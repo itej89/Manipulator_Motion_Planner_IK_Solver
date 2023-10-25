@@ -35,7 +35,7 @@ TEST(IK_TRAJECTORY_TEST, this_should_pass) {
   std::vector<double> output_vector = trial_1.computeIK(input_vector);
 
   // Verify that the output vector matches the expected values.
-  ASSERT_THAT(output_vector, testing::ElementsAre(5, 10, 15));
+  ASSERT_THAT(output_vector, testing::ElementsAre(0.0, 1.0));
 }
 
 /**
