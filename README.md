@@ -17,7 +17,8 @@ Team Members:
 
 ## Proposal Video:
 
-https://github.com/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/assets/113392023/3b4c9d4a-97c5-4fc7-b97b-ceed94f2ac58
+https://github.com/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/assets/113392023/f795cc02-591a-446a-943f-32bf4f3d80d0
+
 
 
 ## Steps to build the library and run test cases
