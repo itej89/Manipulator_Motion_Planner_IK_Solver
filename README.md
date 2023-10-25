@@ -9,7 +9,10 @@ Team Members:
 - Abrarudin Syed
 
 # C++ Boilerplate v2 Badges
-![CICD Workflow status](https://github.com/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/actions/workflows/run-unit-test-and-upload-codecov.yml/badge.svg) [![codecov](https://codecov.io/gh/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/branch/main/graph/badge.svg)](https://codecov.io/gh/KrishnaH96/Manipulator_Motion_Planner_IK_Solver) [![License](https://img.shields.io/badge/license-MIT-blue.svg)](LICENSE)
+![CICD Workflow status](https://github.com/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/actions/workflows/run-unit-test-and-upload-codecov.yml/badge.svg) [![codecov](https://codecov.io/gh/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/branch/main/graph/badge.svg)](https://codecov.io/gh/KrishnaH96/Manipulator_Motion_Planner_IK_Solver)
+
+
+# [Link for the AIP Log Sheet](https://docs.google.com/spreadsheets/d/13-OB5Zy51qPaeGvC6LTy-5HckD2iuU5O/edit?usp=sharing&ouid=116812388978309632579&rtpof=true&sd=true)
 
 
 ## Proposal Video:
