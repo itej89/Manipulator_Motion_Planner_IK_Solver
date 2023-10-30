@@ -2,6 +2,8 @@
 # with the name of either libmyLib1.a or myLib1.so).
 add_library (ik_solver)
 
+find_package (Eigen3 3.3 REQUIRED NO_MODULE)
+
 # Indicate what directories should be added to the include file search
 # path when using this library.
 target_include_directories(ik_solver PUBLIC
@@ -13,3 +15,5 @@ target_sources(ik_solver PUBLIC
   ${CMAKE_CURRENT_SOURCE_DIR}/src/robot.cpp
   ${CMAKE_CURRENT_SOURCE_DIR}/src/DHParameters.cpp
   )
+
+target_link_libraries(ik_solver Eigen3::Eigen)
