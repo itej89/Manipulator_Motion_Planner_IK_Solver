@@ -1,7 +1,21 @@
+#pragma once 
+
+
 #include <iostream>
+#include <math.h> 
+
+#include <string>
 #include <vector>
+#include <map>
+#include <algorithm>
+
+#include <Eigen/Dense>
+
+using Eigen::MatrixXd;
 
 #include "DHParameters.hpp"
+
+#define PI 3.14
 
 /**
  * @file robot.hpp
@@ -14,7 +28,7 @@
  * @author Krishna Rajesh Hundekari
  */
 
-class robot : public DHParameters {
+class robot{
  public:
   /**
    * @brief Constructor to initialize the robot with DH parameters and custom
@@ -28,17 +42,58 @@ class robot : public DHParameters {
    * @param angle The joint angle, which can be considered as a rotation about
    * the z-axis.
    */
-  robot(int links, int DOF, const std::vector<double>& vel_param, double length,
-        double twist, double offset, double angle)
-      : DHParameters(length, twist, offset, angle),
-        num_link(links),
-        degrees_of_freedom(DOF),
-        velocity_profile(vel_param) {}
 
-  /**
-   * @brief Default constructor
-   */
-  robot() {}
+  std::map<std::string,DHParameters> Robot_DHParam;
+
+  robot() {
+
+      Robot_DHParam["J1"] = DHParameters(0.333, PI/2, 0);
+      Robot_DHParam["J2"] = DHParameters(0.0,   -PI/2, 0);
+      Robot_DHParam["J3"] = DHParameters(0.316, PI/2, 0.088);
+      Robot_DHParam["J4"] = DHParameters(0.0,   -PI/2, -0.088);
+      Robot_DHParam["J5"] = DHParameters(0.384, PI/2, 0);
+      Robot_DHParam["J6"] = DHParameters(0.0,   -PI/2, 0.088);
+      Robot_DHParam["J7"] = DHParameters(0.107, 0, 0);
+
+  }
+
+
+  MatrixXd GetJacobian(std::vector<double> config) {
+
+    std::vector<MatrixXd> TF_list;
+    MatrixXd TF_FixedToEndEffector = MatrixXd::Identity(4,4);
+
+
+    for (int i=0; i< config.size(); i++) {
+
+      std::string Joint = 'J'+std::to_string(i);
+
+      double d = Robot_DHParam[Joint].getLinkLength();
+      double alpha = Robot_DHParam[Joint].getLinkTwist();
+      double a = Robot_DHParam[Joint].getLinkOffset();
+      double theta = config[i];
+
+      MatrixXd TF {
+        { cos(theta), -1*sin(theta)*cos(alpha),    sin(theta)*sin(alpha), a*cos(theta) },
+        { sin(theta),    cos(theta)*cos(alpha), -1*cos(theta)*sin(alpha), a*sin(theta) },
+        { 0, sin(alpha), cos(alpha), d },
+        { 0, 0, 0, 1}
+      };
+
+      TF_FixedToEndEffector = TF_FixedToEndEffector*TF;
+      MatrixXd TF_FixedToJoint = TF_FixedToEndEffector;
+      TF_list.push_back(TF_FixedToJoint);
+
+    }
+
+    // TF_list.insert(0, MatrixXd::Identity(4,4));
+    MatrixXd Jacobian;
+
+
+    return Jacobian;
+  }
+
+
 
   /**
    * @brief Compute inverse kinematics for the robot.

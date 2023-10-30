@@ -17,32 +17,36 @@
 
 class DHParameters {
  private:
-  double linkLength; /**< The length of the link. */
-  double linkTwist;  /**< The twist angle of the link. */
-  double linkOffset; /**< The offset along the link's z-axis. */
-  double jointAngle; /**< The joint angle, which can be considered as a rotation
-                        about the z-axis. */
+  // double linkLength; /**< The length of the link. */ 
+  // double linkTwist;  /**< The twist angle of the link. */
+  // double linkOffset; /**< The offset along the link's z-axis. */
+  // double jointAngle; /**< The joint angle, which can be considered as a rotation
+  //                       about the z-axis. */
+
+
+  double d;
+  double alpha;
+  double a;
+  double theta;
 
  public:
-  /**
-   * @brief Default constructor. Initializes all parameters to zero.
-   */
-  DHParameters()
-      : linkLength(0.0), linkTwist(0.0), linkOffset(0.0), jointAngle(0.0) {}
 
   /**
    * @brief Parameterized constructor to initialize the DH parameters.
-   * @param length The length of the link.
-   * @param twist The twist angle of the link.
-   * @param offset The offset along the link's z-axis.
-   * @param angle The joint angle, which can be considered as a rotation about
-   * the z-axis.
+   * @param d The length of the link.
+   * @param alpha The twist angle of the link.
+   * @param a The offset along the link's z-axis.
    */
-  DHParameters(double length, double twist, double offset, double angle)
-      : linkLength(length),
-        linkTwist(twist),
-        linkOffset(offset),
-        jointAngle(angle) {}
+  DHParameters(double length, double twist, double offset)
+      : d(length),
+        alpha(twist),
+        a(offset) {}
+
+  /**
+   * @brief Default Constructor for DHParameters
+   * 
+   */
+  DHParameters() {}
 
   /**
    * @brief Get the length of the link.

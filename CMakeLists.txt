@@ -93,6 +93,7 @@ endif()
 #
 add_subdirectory(libs)
 add_subdirectory(test)
+add_subdirectory(thirdparty_libraries)
 
 # create a target to build documentation
 doxygen_add_docs(docs           # target name
