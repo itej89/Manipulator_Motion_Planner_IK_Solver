@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/lines3d.dir/examples/lines3d.cpp.o -o ../../bin/lines3d  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 

@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/minimal.dir/examples/minimal.cpp.o -o ../../bin/minimal  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 

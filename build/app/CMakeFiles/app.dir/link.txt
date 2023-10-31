@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/app.dir/src/main.cpp.o CMakeFiles/app.dir/__/libs/ik_solver/src/robot.cpp.o CMakeFiles/app.dir/__/libs/ik_solver/src/DHParameters.cpp.o -o app  -Wl,-rpath,/home/tej/mambaforge/lib ../libs/ik_solver/libik_solver.a /home/tej/mambaforge/lib/libpython3.10.so 

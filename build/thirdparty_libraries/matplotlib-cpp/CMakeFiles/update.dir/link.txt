@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/update.dir/examples/update.cpp.o -o ../../bin/update  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 

@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/contour.dir/examples/contour.cpp.o -o ../../bin/contour  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 

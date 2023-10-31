@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/surface.dir/examples/surface.cpp.o -o ../../bin/surface  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 

@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/animation.dir/examples/animation.cpp.o -o ../../bin/animation  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 

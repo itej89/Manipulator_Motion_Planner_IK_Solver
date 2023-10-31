@@ -1,2 +1,0 @@
-/usr/bin/ar qc libik_solver.a CMakeFiles/ik_solver.dir/src/robot.cpp.o CMakeFiles/ik_solver.dir/src/DHParameters.cpp.o
-/usr/bin/ranlib libik_solver.a

@@ -1,1 +1,0 @@
-/usr/bin/c++ CMakeFiles/spy.dir/examples/spy.cpp.o -o ../../bin/spy  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 
