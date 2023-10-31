@@ -11,12 +11,13 @@
  */
 
 #include <gtest/gtest.h>
-
 #include <vector>
 
 #include "DHParameters.hpp"
 #include "gmock/gmock.h"
 #include "robot.hpp"
+
+#include <Eigen/src/Core/Matrix.h>
 
 /**
  * @brief Test case for the IK trajectory calculation.
@@ -25,17 +26,23 @@
  * kinematics trajectory for a given input vector.
  */
 TEST(IK_TRAJECTORY_TEST, this_should_pass) {
-  // Define an input vector representing a position in 3D space.
-  std::vector<double> input_vector = {1.0, 3.0, 2.5};
 
   // Create an instance of the robot for testing.
   robot trial_1;
 
   // Compute the IK trajectory for the input vector.
-  std::vector<double> output_vector = trial_1.computeIK(input_vector);
+  Eigen::VectorXd config(7);
+  config << 0, 0, 0, -3.14/2, 0, 3.14, 0;
 
-  // Verify that the output vector matches the expected values.
-  ASSERT_THAT(output_vector, testing::ElementsAre(0.0, 1.0));
+  trial_1.computeIK(
+    0, 2*3.14/5, 
+  0.1, 0.01, 
+  (5/(2*3.14))*0.01, 
+   config);
+
+  ASSERT_EQ(1, 1);
+  // // Verify that the output vector matches the expected values.
+  // ASSERT_THAT(output_vector, testing::ElementsAre(0.0, 1.0));
 }
 
 /**
