@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/modern.dir/examples/modern.cpp.o -o ../../bin/modern  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 

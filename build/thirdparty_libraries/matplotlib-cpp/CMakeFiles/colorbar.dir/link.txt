@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/colorbar.dir/examples/colorbar.cpp.o -o ../../bin/colorbar  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 

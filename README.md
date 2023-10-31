@@ -50,3 +50,12 @@ https://github.com/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/assets/113392
   cmake --build build/ --clean-first --target all test_coverage
 # open a web browser to browse the test coverage report
   open build/test_coverage/index.html
+## Steps to install eigen library
+```bash
+
+
+# Install eigen library
+sudo apt install libeigen3-dev
+# Install numpy
+pip3 install numpy
+```

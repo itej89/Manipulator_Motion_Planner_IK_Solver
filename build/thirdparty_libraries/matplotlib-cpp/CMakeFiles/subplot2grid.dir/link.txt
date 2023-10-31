@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/subplot2grid.dir/examples/subplot2grid.cpp.o -o ../../bin/subplot2grid  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 

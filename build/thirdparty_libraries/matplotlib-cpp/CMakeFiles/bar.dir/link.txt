@@ -1,0 +1,1 @@
+/usr/bin/c++ CMakeFiles/bar.dir/examples/bar.cpp.o -o ../../bin/bar  -Wl,-rpath,/home/tej/mambaforge/lib /home/tej/mambaforge/lib/libpython3.10.so 
