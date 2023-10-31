@@ -18,9 +18,9 @@
   void robot::computeIK(double thetaf, double theta_dot, double radius, 
   double detlta_theta, double delta_t,  Eigen::VectorXd config ) {
 
-    for(double theta=0; theta<2*PI; theta=theta+detlta_theta) {
+    for(double theta=0; theta<2*M_PI; theta=theta+detlta_theta) {
 
-      std::cout << ("looping-------------------") << theta << "\n";
+      std::cout << ("computeIK looping-------------------") << theta << "\n";
 
       Eigen::VectorXd V(6);
 
@@ -28,24 +28,33 @@
       -1*radius*theta_dot*sin(theta), 0, 0, 0 ;
 
 
-      std::cout << ("Computing Jacobian") << "\n";
+      // std::cout << ("Computing Jacobian") << "\n";
 
       MatrixXd J = GetJacobian(config);
 
-      std::cout << ("Computed Jacobian") << "\n";
+      std::cout << "Computed config ";
+      for (int i=0; i < config.size(); i++) {
+        std::cout << config[i] << " ";
+      }
+      std::cout << " \n";
+
+
+      std::cout << "Computed Jacobian : \n";
+      std::cout << J <<std::endl;
 
       MatrixXd J_inv = J.completeOrthogonalDecomposition()
                                             .pseudoInverse();
 
 
-      std::cout << "Computed J_inv : " << J_inv.rows() << "; " << J_inv.cols() << "\n";
+      // std::cout << "Computed J_inv : " << J_inv.rows() << "; " << J_inv.cols() << "\n";
 
       Eigen::VectorXd q_dot = J_inv * V;
-      
-      std::cout << ("Computed q_dot") << "\n";
 
       config += q_dot * delta_t;
+      
+    
 
+     
       std::cout << ("------------------------") << "\n";
 
     }
