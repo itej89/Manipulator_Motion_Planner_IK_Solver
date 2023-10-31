@@ -28,13 +28,13 @@
 TEST(IK_TRAJECTORY_TEST, this_should_pass) {
 
   // Create an instance of the robot for testing.
-  robot trial_1;
+  Robot trial_1;
 
   // Compute the IK trajectory for the input vector.
   Eigen::VectorXd config(7);
   config << 0, 0, 0, -3.14/2, 0, 3.14, 0;
 
-  trial_1.computeIK(
+  trial_1.ComputeIK(
     0, 2*3.14/5, 
   0.1, 0.01, 
   (5/(2*3.14))*0.01, 

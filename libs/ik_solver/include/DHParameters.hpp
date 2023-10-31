@@ -16,6 +16,7 @@
 #include <vector>
 
 class DHParameters {
+
  private:
   // double linkLength; /**< The length of the link. */ 
   // double linkTwist;  /**< The twist angle of the link. */
@@ -30,6 +31,8 @@ class DHParameters {
   double theta;
 
  public:
+
+  friend class Robot;
 
   /**
    * @brief Parameterized constructor to initialize the DH parameters.
