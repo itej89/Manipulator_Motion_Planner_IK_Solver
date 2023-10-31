@@ -5,6 +5,7 @@
 #include <math.h> 
 
 #include <string>
+#include <utility>
 #include <vector>
 #include <map>
 #include <algorithm>
@@ -44,6 +45,7 @@ class robot{
    */
 
   std::map<std::string,DHParameters> Robot_DHParam;
+  std::vector<std::pair<double, double>> CIRCLE_POINTS;
 
   robot() {
 
@@ -55,24 +57,28 @@ class robot{
       Robot_DHParam["J6"] = DHParameters(0.0,   -PI/2, 0.088);
       Robot_DHParam["J7"] = DHParameters(0.107, 0, 0);
 
+      std::cout << ("Robot_DHParam size------------") << Robot_DHParam.size() << "\n";
   }
 
 
-  MatrixXd GetJacobian(std::vector<double> config) {
+  MatrixXd GetJacobian(Eigen::VectorXd config) {
 
     std::vector<MatrixXd> TF_list;
     MatrixXd TF_FixedToEndEffector = MatrixXd::Identity(4,4);
 
 
-    for (int i=0; i< config.size(); i++) {
+    for (int i=1; i<= config.size(); i++) {
+    
+      std::cout << ("looping throug config------------") << "\n";
 
       std::string Joint = 'J'+std::to_string(i);
 
       double d = Robot_DHParam[Joint].getLinkLength();
       double alpha = Robot_DHParam[Joint].getLinkTwist();
       double a = Robot_DHParam[Joint].getLinkOffset();
-      double theta = config[i];
+      double theta = config[i-1];
 
+      std::cout << ("Build TF------------------------") << i <<"\n";
       MatrixXd TF {
         { cos(theta), -1*sin(theta)*cos(alpha),    sin(theta)*sin(alpha), a*cos(theta) },
         { sin(theta),    cos(theta)*cos(alpha), -1*cos(theta)*sin(alpha), a*sin(theta) },
@@ -80,20 +86,60 @@ class robot{
         { 0, 0, 0, 1}
       };
 
-      TF_FixedToEndEffector = TF_FixedToEndEffector*TF;
+      std::cout << ("Compute TF_FixedToEndEffector---") << "\n";
+      TF_FixedToEndEffector = TF_FixedToEndEffector*TF;\
       MatrixXd TF_FixedToJoint = TF_FixedToEndEffector;
+
+
+      std::cout << ("Compute TF_list----------------") << "\n";
+
       TF_list.push_back(TF_FixedToJoint);
+
+      std::cout << ("-------------------------------") << "\n";
 
     }
 
-    // TF_list.insert(0, MatrixXd::Identity(4,4));
-    MatrixXd Jacobian;
+    std::cout << ("Compute CIRCLE_POINTSt----------------") << "\n";
 
+    CIRCLE_POINTS.push_back(std::pair<double, double>(
+      TF_FixedToEndEffector(1,3),
+      TF_FixedToEndEffector(2,3)));
+
+    std::cout << "[ " << TF_FixedToEndEffector(1,3) << 
+    "," << TF_FixedToEndEffector(2,3) << " ]" << "\n";
+
+    TF_list.insert(TF_list.begin(), MatrixXd::Identity(4,4));
+    MatrixXd Jacobian = MatrixXd::Identity(6, Robot_DHParam.size());
+    std::cout << "Computed Jacobian : " << Jacobian.rows() << "; " << Jacobian.cols() << "\n";
+
+    for (int i=1; i< Robot_DHParam.size(); i++) {
+      std::cout << ("Jacobian looping----------------") << i << "\n";
+      
+      std::string Joint = 'J'+std::to_string(i);
+
+      Eigen::Vector3d Zi_1(TF_list[i-1](0, 2),TF_list[i-1](1, 2),TF_list[i-1](2, 2));
+      Eigen::Vector3d Oi_1(TF_list[i-1](0, 3),TF_list[i-1](1, 3),TF_list[i-1](2, 3));
+      Eigen::Vector3d On(TF_list[TF_list.size()-1](0, 3),TF_list[TF_list.size()-1-1](1, 3),TF_list[TF_list.size()-1-1](2, 3));
+
+      Eigen::Vector3d O_diff = On - Oi_1;
+            
+      //J linear velocity component for the revolute joint is given as 
+      //Zi-1x(On - Oi-1)
+      std::cout << ("Compted cross product-----------") << "\n";
+      Eigen::Vector3d  Ji_linear = Zi_1.cross(O_diff);
+      Eigen::Vector3d  Ji_angular (TF_list[i](0, 2),TF_list[i](1, 2),TF_list[i](2, 2));
+
+      Eigen::VectorXd  Ji(6);
+      Ji <<  Ji_linear[0], Ji_linear[1], Ji_linear[2],
+        Ji_angular[0],   Ji_angular[1],    Ji_angular[2]; 
+
+      Jacobian.col(i) =  Ji;
+    }
+
+   std::cout << "Computed Jacobian : " << Jacobian.rows() << "; " << Jacobian.cols() << "\n";
 
     return Jacobian;
   }
-
-
 
   /**
    * @brief Compute inverse kinematics for the robot.
@@ -103,7 +149,8 @@ class robot{
    * This function computes the inverse kinematics for the robot based on the
    * given target configuration and returns the result as a vector.
    */
-  std::vector<double> computeIK(const std::vector<double>& target);
+  void computeIK(double theta, double theta_dot, double radius, 
+  double detlta_theta, double delta_t, Eigen::VectorXd config );
 
  private:
   int num_link;           /**< The number of links in the robot. */
