@@ -92,7 +92,7 @@ endif()
 # ref: https://cmake.org/cmake/help/latest/guide/tutorial/index.html
 #
 add_subdirectory(thirdparty_libraries)
-add_subdirectory(app)
+# add_subdirectory(app)
 add_subdirectory(libs)
 add_subdirectory(test)
 
