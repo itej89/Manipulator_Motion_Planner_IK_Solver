@@ -168,4 +168,8 @@ initializations such as : " config << 0, 0, 0, -3.14/2, 0, 3.14, 0; "
 
 ReF: https://sourceforge.net/p/cppcheck/discussion/development/thread/1b66df674f/
 
+### cpplint and the order of Eigen header
+
+Eigen header shows error if it is placed at the beginning of the CPP file, but cpplint is detecting the eigen file as c header file and raising a warning that it needs to be placed at beginning.
+
 
