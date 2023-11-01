@@ -1,25 +1,6 @@
-#pragma once 
-
-
-#include <iostream>
-#include <math.h> 
-
-#include <string>
-#include <utility>
-#include <vector>
-#include <map>
-#include <algorithm>
-
-#include <Eigen/Dense>
-
-using Eigen::MatrixXd;
-
-#include "DHParameters.hpp"
-
-#define PI 3.14
-
+#pragma once
 /**
- * @file robot.hpp
+ * @file robot.cpp
  *
  * @brief Represents a robot with Denavit-Hartenberg parameters.
  *
@@ -27,138 +8,99 @@ using Eigen::MatrixXd;
  * properties and methods.
  *
  * @author Krishna Rajesh Hundekari
+
+ * Apache License Version 2.0, January 2004
+
+    * Licensed to the Apache Software Foundation (ASF) under one
+    * or more contributor license agreements.  See the NOTICE file
+    * distributed with this work for additional information
+    * regarding copyright ownership.  The ASF licenses this file
+    * to you under the Apache License, Version 2.0 (the
+    * "License"); you may not use this file except in compliance
+    * with the License.  You may obtain a copy of the License at
+    * 
+    *   http://www.apache.org/licenses/LICENSE-2.0
+    * 
+    * Unless required by applicable law or agreed to in writing,
+    * software distributed under the License is distributed on an
+    * "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+    * KIND, either express or implied.  See the License for the
+    * specific language governing permissions and limitations
+    * under the License.
  */
 
-class robot{
- public:
-  /**
-   * @brief Constructor to initialize the robot with DH parameters and custom
-   * properties.
-   * @param links The number of links in the robot.
-   * @param DOF The degrees of freedom of the robot.
-   * @param vel_param A vector containing velocity profile information.
-   * @param length The length of the link.
-   * @param twist The twist angle of the link.
-   * @param offset The offset along the link's z-axis.
-   * @param angle The joint angle, which can be considered as a rotation about
-   * the z-axis.
-   */
 
-  std::map<std::string,DHParameters> Robot_DHParam;
-  std::vector<std::pair<double, double>> CIRCLE_POINTS;
-
-  robot() {
-
-      Robot_DHParam["J1"] = DHParameters(0.333, M_PI/2, 0);
-      Robot_DHParam["J2"] = DHParameters(0.0,   -M_PI/2, 0);
-      Robot_DHParam["J3"] = DHParameters(0.316, M_PI/2, 0.088);
-      Robot_DHParam["J4"] = DHParameters(0.0,   -M_PI/2, -0.088);
-      Robot_DHParam["J5"] = DHParameters(0.384, M_PI/2, 0);
-      Robot_DHParam["J6"] = DHParameters(0.0,   -M_PI/2, 0.088);
-      Robot_DHParam["J7"] = DHParameters(-0.107, 0, 0);
-
-      // std::cout << ("Robot_DHParam size------------") << Robot_DHParam.size() << "\n";
-  }
+#include "DHParameters.hpp"
+#include <iostream>
+#include <cmath>
+#include <string>
+#include <utility>
+#include <vector>
+#include <map>
+#include <algorithm>
+#include <Eigen/Dense>
 
 
-  MatrixXd GetJacobian(Eigen::VectorXd config) {
+class Robot {
+public:
 
-    std::vector<MatrixXd> TF_list;
-    MatrixXd TF_FixedToEndEffector = MatrixXd::Identity(4,4);
+    /**
+     * @brief Constructor to initialize the robot with DH parameters and custom properties.
+     *
+     * @param links The number of links in the robot.
+     * @param DOF The degrees of freedom of the robot.
+     * @param vel_param A vector containing velocity profile information.
+     * @param length The length of the link.
+     * @param twist The twist angle of the link.
+     * @param offset The offset along the link's z-axis.
+     * @param angle The joint angle, which can be considered as a rotation about the z-axis.
+     */
+    Robot();
 
+    /**
+     * @brief Calculate the transformation matrices for each joint in the robot.
+     *
+     * @param config A vector representing the joint configuration.
+     * @return A vector of transformation matrices for each joint.
+     */
+    std::vector<Eigen::MatrixXd> CalculateTransformations(const Eigen::VectorXd& config);
 
-    for (int i=1; i<= config.size(); i++) {
-    
-      // std::cout << ("looping throug config------------") << "\n";
+    /**
+     * @brief Compute the Jacobian matrix for the robot.
+     *
+     * @param config A vector representing the joint configuration.
+     * @return The Jacobian matrix.
+     */
+    Eigen::MatrixXd GetJacobian(const Eigen::VectorXd& config); 
 
-      std::string Joint = 'J'+std::to_string(i);
+    /**
+     * @brief Compute inverse kinematics for the robot.
+     *
+     * @param theta Initial angle.
+     * @param theta_dot Angular velocity.
+     * @param radius Radius.
+     * @param delta_theta Incremental angle.
+     * @param delta_t Time step.
+     * @param config A vector representing the current joint configuration.
+     */
+    Eigen::VectorXd ComputeIK(Eigen::VectorXd V, Eigen::VectorXd config);
 
-      double d = Robot_DHParam[Joint].getLinkLength();
-      double alpha = Robot_DHParam[Joint].getLinkTwist();
-      double a = Robot_DHParam[Joint].getLinkOffset();
-      double theta = config[i-1];
-
-      // std::cout << ("Build TF------------------------") << i <<"\n";
-      MatrixXd TF {
-        { cos(theta), -1*sin(theta)*cos(alpha),    sin(theta)*sin(alpha), a*cos(theta) },
-        { sin(theta),    cos(theta)*cos(alpha), -1*cos(theta)*sin(alpha), a*sin(theta) },
-        { 0, sin(alpha), cos(alpha), d },
-        { 0, 0, 0, 1}
-      };
-
-      std::cout << "TF ------------" << i <<std::endl;
-      std::cout << TF << std::endl;
-      std::cout << "------------" << std::endl;
-
-      // std::cout << ("Compute TF_FixedToEndEffector---") << "\n";
-      TF_FixedToEndEffector = TF_FixedToEndEffector*TF;\
-      MatrixXd TF_FixedToJoint = TF_FixedToEndEffector;
-
-
-      // std::cout << ("Compute TF_list----------------") << "\n";
-
-      TF_list.push_back(TF_FixedToJoint);
-
-      // std::cout << ("-------------------------------") << "\n";
-
-    }
-
-    // std::cout << ("Compute CIRCLE_POINTSt----------------") << "\n";
-
-    CIRCLE_POINTS.push_back(std::pair<double, double>(
-      TF_FixedToEndEffector(1,3),
-      TF_FixedToEndEffector(2,3)));
-
-    std::cout << "[ " << TF_FixedToEndEffector(1,3) << 
-    "," << TF_FixedToEndEffector(2,3) << " ]" << "\n";
-
-    TF_list.insert(TF_list.begin(), MatrixXd::Identity(4,4));
-    MatrixXd Jacobian (6, Robot_DHParam.size());
-    // std::cout << "Computed Jacobian : " << Jacobian.rows() << "; " << Jacobian.cols() << "\n";
-
-    for (int i=1; i<= Robot_DHParam.size(); i++) {
-      // std::cout << ("Jacobian looping----------------") << i << "\n";
-      
-      std::string Joint = 'J'+std::to_string(i);
-
-      Eigen::Vector3d Zi_1(TF_list[i-1](0, 2),TF_list[i-1](1, 2),TF_list[i-1](2, 2));
-      Eigen::Vector3d Oi_1(TF_list[i-1](0, 3),TF_list[i-1](1, 3),TF_list[i-1](2, 3));
-      Eigen::Vector3d On(TF_list[TF_list.size()-1](0, 3),TF_list[TF_list.size()-1](1, 3),TF_list[TF_list.size()-1](2, 3));
-
-      Eigen::Vector3d O_diff = On - Oi_1;
-            
-      //J linear velocity component for the revolute joint is given as 
-      //Zi-1x(On - Oi-1)
-      // std::cout << ("Compted cross product-----------") << "\n";
-      Eigen::Vector3d  Ji_linear = Zi_1.cross(O_diff);
-      Eigen::Vector3d  Ji_angular (TF_list[i](0, 2),TF_list[i](1, 2),TF_list[i](2, 2));
-
-      Eigen::VectorXd  Ji(6);
-      Ji <<  Ji_linear[0], Ji_linear[1], Ji_linear[2],
-        Ji_angular[0],   Ji_angular[1],    Ji_angular[2]; 
-
-      Jacobian.col(i-1) =  Ji;
-    }
-
-  //  std::cout << "Computed Jacobian : " << Jacobian.rows() << "; " << Jacobian.cols() << "\n";
-
-    return Jacobian;
-  }
-
-  /**
-   * @brief Compute inverse kinematics for the robot.
-   * @param target A vector representing the target configuration.
-   * @return A vector representing the computed inverse kinematics solution.
-   *
-   * This function computes the inverse kinematics for the robot based on the
-   * given target configuration and returns the result as a vector.
-   */
-  void computeIK(double theta, double theta_dot, double radius, 
-  double detlta_theta, double delta_t, Eigen::VectorXd config );
-
- private:
-  int num_link;           /**< The number of links in the robot. */
-  int degrees_of_freedom; /**< The degrees of freedom of the robot. */
-  std::vector<double> velocity_profile; /**< A vector containing velocity
-                                           profile information. */
+      /**
+      * @brief Get the vector of points representing the end-effector's circular trajectory.
+      * 
+      * This function returns a constant reference to the vector of points that represent
+      * the end-effector's positions along a circular trajectory.
+      *
+      * @return A constant reference to the vector of (x, y) points.
+      */
+      const std::vector<std::pair<double, double>>& getCirclePoints() const;
+  
+private:
+    std::map<std::string, DHParameters> Robot_DHParam; /**< Created a map with strings as keys & object of 
+    DH parameter class as its corresponding value. */
+    std::vector<std::pair<double, double>> CIRCLE_POINTS;/**< Vector of Circle points to plot */
+    int num_link;           /**< The number of links in the robot. */
+    int degrees_of_freedom; /**< The degrees of freedom of the robot. */
+    std::vector<double> velocity_profile; /**< A vector containing velocity profile information. */
 };
+
