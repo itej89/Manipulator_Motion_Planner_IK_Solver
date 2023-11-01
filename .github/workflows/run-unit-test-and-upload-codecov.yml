@@ -36,6 +36,11 @@ jobs:
     steps:
       # We want to use GitHub CI checkout version 3 to check out our branch
       - uses: actions/checkout@v3
+
+      # Install Eigen
+      - name: install Eigen 
+        run: |   
+            sudo apt install libeigen3-dev
       
       # Install some system pacakges
       - name: Install build packages
