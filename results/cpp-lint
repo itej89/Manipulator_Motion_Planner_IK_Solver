@@ -1,5 +1,8 @@
 (base) tej@tejpc:~/Documents/Maryland/Semester4/808x/HW/OCt31/Manipulator_Motion_Planner_IK_Solver$ cpplint --filter="-legal/copyright" $( find . -name *.cpp | grep -vE -e "^./build/"  | grep -vE -e "^./thirdparty_libraries/matplotlib-cpp/"  )
+Done processing ./app/src/main.cpp
 Done processing ./libs/ik_solver/src/DHParameters.cpp
+./libs/ik_solver/src/robot.cpp:14:  Found C system header after other header. Should be: robot.h, c system, c++ system, other.  [build/include_order] [4]
 Done processing ./libs/ik_solver/src/robot.cpp
+./test/test.cpp:19:  Found C system header after other header. Should be: test.h, c system, c++ system, other.  [build/include_order] [4]
 Done processing ./test/test.cpp
-
+Total errors found: 2
