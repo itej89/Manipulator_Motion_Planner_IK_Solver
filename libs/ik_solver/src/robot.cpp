@@ -108,12 +108,10 @@ Eigen::MatrixXd Robot::GetJacobian(const Eigen::VectorXd& config) {
  * @param delta_t Time step.
  * @param config A vector representing the current joint configuration.
  */
-void Robot::ComputeIK(double thetaf, double theta_dot, double radius,
-    double delta_theta, double delta_t, Eigen::VectorXd config) {
-    for (double theta = 0; theta < 2 * M_PI; theta = theta + delta_theta) {
-        Eigen::VectorXd V(6);
+// void Robot::ComputeIK(double thetaf, double theta_dot, double radius,
+//     double delta_theta, double delta_t, Eigen::VectorXd config) {
 
-        V << 0, radius * theta_dot * cos(theta), -1 * radius * theta_dot * sin(theta), 0, 0, 0;
+Eigen::VectorXd Robot::ComputeIK(Eigen::VectorXd V, Eigen::VectorXd config) {
 
         Eigen::MatrixXd J = GetJacobian(config);
 
@@ -121,9 +119,7 @@ void Robot::ComputeIK(double thetaf, double theta_dot, double radius,
 
         Eigen::VectorXd q_dot = J_inv * V;
 
-        config += q_dot * delta_t;
-    }
-
+        return q_dot;
 }
 
 /**

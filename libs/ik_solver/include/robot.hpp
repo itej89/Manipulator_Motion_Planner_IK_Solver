@@ -62,7 +62,7 @@ public:
      * @param delta_t Time step.
      * @param config A vector representing the current joint configuration.
      */
-    void ComputeIK(double theta, double theta_dot, double radius, double delta_theta, double delta_t, Eigen::VectorXd config);
+    Eigen::VectorXd ComputeIK(Eigen::VectorXd V, Eigen::VectorXd config);
 
       /**
       * @brief Get the vector of points representing the end-effector's circular trajectory.
