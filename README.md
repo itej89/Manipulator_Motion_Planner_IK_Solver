@@ -73,8 +73,6 @@ We are passing the velocity profile of the endeffector as the input to the IK so
 ![Kiku](reference_images/result_radius_0_15.png)
 
 
-
-
 # C++ Boilerplate v2 Badges
 ![CICD Workflow status](https://github.com/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/actions/workflows/run-unit-test-and-upload-codecov.yml/badge.svg) [![codecov](https://codecov.io/gh/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/branch/main/graph/badge.svg)](https://codecov.io/gh/KrishnaH96/Manipulator_Motion_Planner_IK_Solver)
 
@@ -84,7 +82,7 @@ We are passing the velocity profile of the endeffector as the input to the IK so
 
 ## Proposal Video:
 
-https://github.com/KrishnaH96/Manipulator_Motion_Planner_IK_Solver/assets/113392023/f795cc02-591a-446a-943f-32bf4f3d80d0
+### [Link for the Video](https://drive.google.com/file/d/11OWSdmg63_YWRikv8_3u8mmxUu3mqiwZ/view?usp=sharing)
 
 
 ## API and Other Developer Documnetation
